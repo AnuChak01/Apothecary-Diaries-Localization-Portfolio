@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;700&family=Noto+Sans+JP:wght@100;300;400&family=Cinzel:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ink:#08060c;--paper:#f0ebe0;--muted:rgba(240,235,224,.5);
+  --crimson:#b5192b;--gold:#c9922a;--amber:#d4841a;--warm:#f5c87a;
+  --teal:#5fb3a8;--purple:#9b7fd4;--sakura:#e8a0b0;--green:#6aaa7a;--slate:#6A7FA6;--steel:#8A9BB0;
+}
+html,body{background:#08060c !important;}
+body{color:var(--paper);font-family:'Cormorant Garamond','Noto Serif JP',serif;overflow-x:hidden;cursor:none;}
+
+#cur{position:fixed;width:9px;height:9px;background:var(--warm);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s;}
+#cur-ring{position:fixed;width:30px;height:30px;border:1px solid rgba(245,200,122,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s;}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 5rem;border-bottom:1px solid rgba(212,132,26,0.15);position:sticky;top:0;background:rgba(8,6,12,0.18);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);z-index:100;}
+.nav-logo{font-family:'Noto Serif JP',serif;font-weight:300;font-size:.78rem;color:var(--amber);letter-spacing:.28em;}
+.nav-links{display:flex;gap:4rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-family:'Noto Sans JP',sans-serif;font-weight:100;letter-spacing:.2em;text-transform:uppercase;transition:color .3s;display:flex;flex-direction:column;align-items:center;gap:.18rem;}
+.nav-links a:hover{color:var(--paper);}
+.nav-links a.active{color:var(--amber);}
+.nav-en{font-size:.6rem;letter-spacing:.18em;}
+.nav-jp{font-family:'Noto Serif JP',serif;font-size:.58rem;letter-spacing:.22em;opacity:.55;text-transform:none;}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s ease;}
+.reveal.on{opacity:1;transform:none;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}.d4{transition-delay:.4s;}.d5{transition-delay:.5s;}
+
+.wrap{position:relative;z-index:1;padding:0 8rem 10rem;}
+
+.hero{padding:7rem 8rem 5rem;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.6rem,4.5vw,3.8rem);line-height:1.1;letter-spacing:.06em;margin-bottom:2rem;}
+.hero-title em{font-style:italic;color:var(--amber);}
+.hero-intro{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;line-height:2;color:rgba(240,235,224,.55);max-width:560px;}
+
+.sec{padding:5.5rem 0;}
+.sec-label{display:inline-flex;align-items:center;gap:1rem;font-family:'Noto Sans JP',sans-serif;font-weight:300;font-size:.65rem;letter-spacing:.42em;text-transform:uppercase;color:rgba(181,25,43,.9);margin-bottom:2.8rem;}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--crimson);}
+
+.page-header{display:flex;align-items:center;gap:1.4rem;margin-bottom:4rem;}
+.page-num{font-family:'Noto Sans JP',sans-serif;font-weight:100;font-size:.55rem;letter-spacing:.35em;color:rgba(240,235,224,.28);text-transform:uppercase;}
+.page-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.6rem;color:var(--paper);}
+.page-jp{font-family:'Noto Serif JP',serif;font-weight:200;font-size:.78rem;color:rgba(240,235,224,.4);letter-spacing:.28em;}
+
+.prose{font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:2.1;color:rgba(240,235,224,.52);margin-bottom:2.5rem;}
+.prose em{font-style:italic;color:var(--amber);}
+
+.disc-block{border-left:2px solid rgba(181,25,43,.35);padding:1.8rem 2.2rem;background:rgba(181,25,43,.02);}
+.disc-block p{font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:2.1;color:rgba(240,235,224,.52);}
+.disc-block p em{font-style:italic;color:var(--amber);}
+
+.why-block{border-left:2px solid rgba(201,146,42,.28);padding:1.8rem 2.2rem;background:rgba(201,146,42,.02);margin-top:3rem;}
+.why-label{font-family:'Noto Sans JP',sans-serif;font-weight:300;font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--amber);margin-bottom:1rem;}
+.why-block p{font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:2.1;color:rgba(240,235,224,.52);}
+.why-block p em{font-style:italic;color:var(--amber);}
+
+table{width:100%;border-collapse:collapse;margin-bottom:3.5rem;background:rgba(201,146,42,.02);border-radius:12px;overflow:hidden;border:0.5px solid rgba(201,146,42,.12);border-left:2px solid rgba(181,25,43,.3);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+th{font-family:'Noto Sans JP',sans-serif;font-weight:300;font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(212,132,26,.7);padding:.9rem 1.6rem;border-bottom:0.5px solid rgba(201,146,42,.15);text-align:left;background:rgba(201,146,42,.03);}
+td{font-family:'Cormorant Garamond',serif;font-size:.98rem;line-height:1.85;color:rgba(240,235,224,.52);padding:1rem 1.6rem;border-bottom:0.5px solid rgba(201,146,42,.08);vertical-align:top;}
+td:first-child{color:rgba(240,235,224,.82);font-style:italic;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(201,146,42,.03);}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.7rem;vertical-align:middle;}
+
+.palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:1.6rem;margin-bottom:3rem;}
+.swatch{display:flex;flex-direction:column;align-items:center;gap:.6rem;}
+.sw{width:40px;height:40px;border-radius:50%;}
+.sw-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.75rem;color:rgba(240,235,224,.42);text-align:center;}
+.sw-hex{font-family:'Noto Sans JP',sans-serif;font-weight:100;font-size:.48rem;letter-spacing:.14em;color:rgba(240,235,224,.22);text-align:center;}
+
+.vl-list{list-style:none;display:flex;flex-direction:column;gap:1.4rem;margin-bottom:3rem;}
+.vl-list li{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.8;color:rgba(240,235,224,.55);display:flex;align-items:center;gap:1rem;}
+.vl-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
+.vl-arrow{color:rgba(240,235,224,.28);margin:0 .3rem;}
+
+.num-list{list-style:none;display:flex;flex-direction:column;gap:2.5rem;margin-bottom:3.5rem;}
+.num-list li{display:grid;grid-template-columns:2.5rem 1fr;gap:1rem;align-items:start;}
+.num{font-family:'Noto Sans JP',sans-serif;font-weight:100;font-size:.58rem;letter-spacing:.2em;color:var(--amber);padding-top:.35rem;}
+.num-content strong{font-family:'Noto Sans JP',sans-serif;font-weight:300;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(240,235,224,.72);display:block;margin-bottom:.5rem;}
+.num-content p{font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.9;color:rgba(240,235,224,.52);}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<nav>
+  <div class="nav-logo">Localization Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="AP_Diaries_Page_1.html"><span class="nav-en">Synopsis</span><span class="nav-jp">概要</span></a></li>
+    <li><a href="apothecary-garden-page_2.html"><span class="nav-en">Apothecary's Garden</span><span class="nav-jp">薬草園</span></a></li>
+    <li><a href="apothecary-dialogues_pg_3_final.html"><span class="nav-en">Dialogues</span><span class="nav-jp">対話</span></a></li>
+    <li><a href="reference-sheet.html" class="active"><span class="nav-en">Reference Sheet</span><span class="nav-jp">参考資料</span></a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1 class="hero-title reveal d1">Reference <em>Sheet</em></h1>
+  <p class="hero-intro reveal d2">A documentation of the research, cultural translation, and design decisions behind this localization portfolio, designed and developed with AI assistance.</p>
+</section>
+
+<div class="wrap">
+
+  <!-- PAGE 1 -->
+  <section class="sec">
+    <div class="page-header reveal">
+      <span class="page-num">Page 01</span>
+      <span class="page-name">Synopsis</span>
+      <span class="page-jp">概要</span>
+    </div>
+
+    <div class="sec-label reveal">Characters</div>
+    <table class="reveal d1">
+      <thead><tr><th>Character</th><th>漢字</th><th>Colour</th><th>Colour Reasoning</th></tr></thead>
+      <tbody>
+        <tr><td>Maomao</td><td>猫猫</td><td><span class="dot" style="background:#5fb3a8;"></span>Teal</td><td>Medicinal, refers to growth and resilience</td></tr>
+        <tr><td>Jinshi</td><td>壬氏</td><td><span class="dot" style="background:#9b7fd4;"></span>Purple</td><td>Royal and noble</td></tr>
+        <tr><td>Luomen</td><td>羅門</td><td><span class="dot" style="background:#8A9BB0;"></span>Steel</td><td>Wisdom and knowledge</td></tr>
+        <tr><td>Gyokuyou</td><td>玉葉妃</td><td><span class="dot" style="background:#e8a0b0;"></span>Sakura</td><td>Beauty, grace and quiet perception</td></tr>
+        <tr><td>Shisui</td><td>紫水</td><td><span class="dot" style="background:#6aaa7a;"></span>Sage</td><td>Free-spirited, bright and hidden</td></tr>
+        <tr><td>Lakan</td><td>羅漢</td><td><span class="dot" style="background:#6A7FA6;"></span>Slate</td><td>Shrewd and strategic coldness</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-label reveal">Localization Decisions</div>
+    <table class="reveal d2">
+      <thead><tr><th>Localization Point</th><th>Challenge</th><th>Approach</th></tr></thead>
+      <tbody>
+        <tr><td>Character names</td><td>Preserving Japanese identity while remaining accessible to English readers</td><td>Presented bilingually — kanji alongside romanized name</td></tr>
+        <tr><td>Bilingual Identity Markers</td><td>Conveying personality and role without revealing plot</td><td>Brief two-part markers per character — Japanese and English paired to create individual tone and voice</td></tr>
+        <tr><td>Characters &amp; Personality</td><td>Characterizing each figure without over-exposition or spoilers</td><td>Personality-matched colour assignment alongside bilingual markers that establish each character's distinct register</td></tr>
+        <tr><td>Japanese quotes alongside English</td><td>Retaining the character's original voice and tone</td><td>Both versions presented together, Japanese prioritized</td></tr>
+        <tr><td>Historical terminology</td><td>Court-specific language carries cultural weight that risks losing meaning across Pages 1–3</td><td>Key terms preserved with contextual framing rather than domesticated</td></tr>
+        <tr><td>Glossary terms (薬屋 · 将棋)</td><td>Close English equivalents exist but lose the layered cultural and narrative meaning specific to this story</td><td>Retained in Japanese with contextual explanation — defined by what they mean within this story, not just their dictionary translation</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-label reveal">Colour Palette</div>
+    <div class="palette reveal d3">
+      <div class="swatch"><div class="sw" style="background:#08060c;box-shadow:0 0 0 1px rgba(240,235,224,.18);"></div><div class="sw-name">Ink</div><div class="sw-hex">#08060c</div></div>
+      <div class="swatch"><div class="sw" style="background:#f0ebe0;"></div><div class="sw-name">Paper</div><div class="sw-hex">#f0ebe0</div></div>
+      <div class="swatch"><div class="sw" style="background:#b5192b;"></div><div class="sw-name">Crimson</div><div class="sw-hex">#b5192b</div></div>
+      <div class="swatch"><div class="sw" style="background:#d4841a;"></div><div class="sw-name">Amber</div><div class="sw-hex">#d4841a</div></div>
+      <div class="swatch"><div class="sw" style="background:#c9922a;"></div><div class="sw-name">Gold</div><div class="sw-hex">#c9922a</div></div>
+      <div class="swatch"><div class="sw" style="background:#f5c87a;"></div><div class="sw-name">Warm</div><div class="sw-hex">#f5c87a</div></div>
+    </div>
+
+    <div class="sec-label reveal">Ghost Kanji</div>
+    <p class="prose reveal d4">The Ghost Kanji 「薬」 is placed here deliberately, a single character that can read and mean both medicine and poison.</p>
+  </section>
+
+  <!-- PAGE 2 -->
+  <section class="sec">
+    <div class="page-header reveal">
+      <span class="page-num">Page 02</span>
+      <span class="page-name">Apothecary's Garden</span>
+      <span class="page-jp">薬草園</span>
+    </div>
+
+    <div class="sec-label reveal">Visual Language</div>
+    <ul class="vl-list reveal d1">
+      <li><div class="vl-dot" style="background:rgba(178,198,94,1);"></div>Wood Sorrel <span class="vl-arrow">→</span> Resilience / Growth</li>
+      <li><div class="vl-dot" style="background:rgba(138,110,200,1);"></div>Kikyo <span class="vl-arrow">→</span> Eternal Love / Honesty</li>
+      <li><div class="vl-dot" style="background:rgba(210,80,110,1);"></div>Peony <span class="vl-arrow">→</span> Grace / Nobility</li>
+      <li><div class="vl-dot" style="background:rgba(220,47,2,1);"></div>Kaentake <span class="vl-arrow">→</span> Toxic / Poison</li>
+      <li><div class="vl-dot" style="background:rgba(255,220,120,1);"></div>Ox Bezoar <span class="vl-arrow">→</span> Medicine / Remedy</li>
+    </ul>
+    <p class="prose reveal">Each flower card uses a unique visual identity derived from its narrative symbolism rather than botanical realism alone.</p>
+    <p class="prose reveal">Please note: Kikyo and Kaentake have been kept in their original Japanese names instead of English translations, as the English equivalents are lengthy and would affect visual balance.</p>
+
+    <div class="sec-label reveal">Localization Decisions</div>
+    <table class="reveal d2">
+      <thead><tr><th>Source Element</th><th>Localization Challenge</th><th>Solution</th></tr></thead>
+      <tbody>
+        <tr><td>Hanakotoba</td><td>Unknown to most western readers</td><td>Interactive flower cards</td></tr>
+        <tr><td>Medicinal references</td><td>Researching traditional medicinal plant and other elements usage</td><td>Research panel on reverse side of the cards</td></tr>
+        <tr><td>Flower symbolism</td><td>Hidden narrative layer</td><td>Visual symbolism system</td></tr>
+        <tr><td>Character observations</td><td>Characterization of Maomao and her inner monologues</td><td>Using Maomao's observational patterns regarding people, plants, situations and surroundings</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-label reveal">Element &amp; Purpose</div>
+    <table class="reveal d3">
+      <thead><tr><th>Element</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>Noto Serif JP</td><td>Authentic Japanese literary texture</td></tr>
+        <tr><td>Cormorant Garamond</td><td>Elegant and officially used in the series</td></tr>
+        <tr><td>Flip Cards</td><td>Hidden meanings / duality</td></tr>
+        <tr><td>Glow Effects</td><td>Symbolic emphasis</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-label reveal">Colour Palette</div>
+    <div class="palette reveal d4">
+      <div class="swatch"><div class="sw" style="background:#08060c;box-shadow:0 0 0 1px rgba(240,235,224,.18);"></div><div class="sw-name">Ink</div><div class="sw-hex">#08060c</div></div>
+      <div class="swatch"><div class="sw" style="background:#c9922a;"></div><div class="sw-name">Amber</div><div class="sw-hex">#c9922a</div></div>
+      <div class="swatch"><div class="sw" style="background:#f5c87a;"></div><div class="sw-name">Warm</div><div class="sw-hex">#f5c87a</div></div>
+      <div class="swatch"><div class="sw" style="background:rgba(178,198,94,1);"></div><div class="sw-name">Herb Green</div><div class="sw-hex">rgb(178,198,94)</div></div>
+      <div class="swatch"><div class="sw" style="background:rgba(195,220,100,1);"></div><div class="sw-name">Highlight</div><div class="sw-hex">rgb(195,220,100)</div></div>
+      <div class="swatch"><div class="sw" style="background:rgba(200,235,170,1);"></div><div class="sw-name">Ember Green</div><div class="sw-hex">rgb(200,235,170)</div></div>
+    </div>
+
+    <div class="why-block reveal d5">
+      <div class="why-label">Why This Page Exists</div>
+      <p>This page explores how cultural symbolism can be localized without removing its original context. Each flower was researched not only as a botanical element, but as a narrative device contributing to characterization, foreshadowing, and thematic storytelling within <em>Apothecary Diaries</em>.</p>
+    </div>
+  </section>
+
+  <!-- PAGE 3 -->
+  <section class="sec">
+    <div class="page-header reveal">
+      <span class="page-num">Page 03</span>
+      <span class="page-name">Dialogues</span>
+      <span class="page-jp">対話</span>
+    </div>
+
+    <div class="sec-label reveal">Localization Decisions</div>
+    <ul class="num-list reveal d1">
+      <li>
+        <span class="num">01</span>
+        <div class="num-content">
+          <strong>EN / JP Toggle</strong>
+          <p>The most direct localization demonstration on the page. Switching the entire scene in either language, not word for word rather as per the cultural and tonality. Each version was written to stand independently in its own linguistic and cultural context.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <div class="num-content">
+          <strong>Honorific Retention — さま · 妃</strong>
+          <p>In the Imperial court, how a character is addressed encodes rank, distance, and deference. Replacing these with generic English equivalents flattens the hierarchy carried in every spoken line.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <div class="num-content">
+          <strong>Stage Directions in Red</strong>
+          <p>Narrative action cues rendered in crimson, keeping the reader inside the moment without needing illustration.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">04</span>
+        <div class="num-content">
+          <strong>Inner Monologue Framing</strong>
+          <p>Maomao's internal voice is styled at reduced opacity and lighter weight, visually separating her observations from the spoken dialogue around her.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">05</span>
+        <div class="num-content">
+          <strong>Translation Annotations</strong>
+          <p>Notes embedded in the English version for terms where cultural context cannot be carried by translation alone.</p>
+        </div>
+      </li>
+    </ul>
+
+    <div class="sec-label reveal">Colour Palette</div>
+    <div class="palette reveal d2">
+      <div class="swatch"><div class="sw" style="background:#00060f;box-shadow:0 0 0 1px rgba(240,235,224,.18);"></div><div class="sw-name">Night Ink</div><div class="sw-hex">#00060f</div></div>
+      <div class="swatch"><div class="sw" style="background:rgba(184,149,106,1);"></div><div class="sw-name">Gold</div><div class="sw-hex">rgba(184,149,106)</div></div>
+      <div class="swatch"><div class="sw" style="background:rgba(215,224,238,.93);"></div><div class="sw-name">Moon Text</div><div class="sw-hex">rgba(215,224,238)</div></div>
+      <div class="swatch"><div class="sw" style="background:rgba(172,182,200,.82);"></div><div class="sw-name">Mist</div><div class="sw-hex">rgba(172,182,200)</div></div>
+      <div class="swatch"><div class="sw" style="background:rgba(165,58,58,.84);"></div><div class="sw-name">Note Red</div><div class="sw-hex">rgba(165,58,58)</div></div>
+    </div>
+
+
+    <div class="why-block reveal d3">
+      <div class="why-label">Why This Page Exists</div>
+      <p>A localization portfolio is best demonstrated through practice. This scene has been provided as a sample localization, preserving not just meaning but tonality, hierarchy, and voice. It was chosen deliberately: it captures Imperial court behavior, Maomao's dry wit and clinical reading of a situation others misread entirely, and a solution that arrives too late, ultimately changing her fate completely. The dark blue of this page was chosen to match the scene's weight.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer style="position:relative;z-index:1;padding:4rem 8rem;border-top:1px solid rgba(212,132,26,0.15);margin-top:2rem;background:rgba(181,25,43,.015);">
+  <div style="font-family:'Noto Sans JP',sans-serif;font-weight:300;font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(212,132,26,.85);margin-bottom:1.6rem;">Disclaimer</div>
+  <p style="font-family:'Cormorant Garamond',serif;font-size:.98rem;line-height:2.1;color:rgba(240,235,224,.7);max-width:820px;">This is a non-commercial localization portfolio based on <em style="font-style:italic;color:rgba(240,235,224,.8);">薬屋のひとりごと (Kusuriya no Hitorigoto — Apothecary Diaries)</em>. All characters, story, illustrations, and intellectual property belong to their respective rights holders, original creators, and associated publishers.</p>
+  <p style="font-family:'Cormorant Garamond',serif;font-size:.98rem;line-height:2.1;color:rgba(240,235,224,.7);max-width:820px;margin-top:.8rem;">All images and visuals used belong to their respective copyright holders and are used here solely for portfolio and educational purposes. No copyright infringement is intended.</p>
+  <p style="font-family:'Cormorant Garamond',serif;font-size:.98rem;line-height:2.1;color:rgba(240,235,224,.7);max-width:820px;margin-top:.8rem;">This portfolio was created solely to demonstrate skills in localization and cultural translation, not for profitable uses.</p>
+  <p style="font-family:'Cormorant Garamond',serif;font-size:.98rem;line-height:2.1;color:rgba(240,235,224,.7);max-width:820px;margin-top:.8rem;">All localization choices, writing, design, and structure in this portfolio are the work of the localizer.</p>
+  <p style="font-family:'Cormorant Garamond',serif;font-size:.92rem;line-height:2;color:rgba(212,132,26,.8);max-width:820px;margin-top:1.4rem;font-style:italic;">Portfolio by Anurupa Chakraborty, 2026.</p>
+</footer>
+
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function cl(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(cl);})();
+document.querySelectorAll('a,td').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.2)';ring.style.width='46px';ring.style.height='46px';});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';ring.style.width='30px';ring.style.height='30px';});
+});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
